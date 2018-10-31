@@ -4,6 +4,9 @@
 
 
 import time
+import datetime
+import os.path
+
 # begin
 
 theFile = input('Enter file to open: ')
@@ -14,17 +17,22 @@ except:
     quit()
 
 line = []
-nCtr = 0
 for lines in myFile:
     lines = lines.rstrip()
     line.append(lines.upper())
 myFile.close()
 
 theNewFile = theFile.replace('.txt', '-uppercase-' + time.strftime('%m-%d-%Y') + '.txt')
-newFile = open(theNewFile,'w')
+
+if not os.path.exists(theNewFile):
+    newFile = open(theNewFile,'w')
+    newFile.close()
+else:
+    print(theNewFile + ' already exist.')
+    theNewFile = theFile.replace('.txt', '-uppercase-' + time.strftime('%m-%d-%Y-%I%M%p') + '.txt')
+    newFile = open(theNewFile, 'w')
+
 for rows in line:
     newFile.write(rows)
-
 newFile.close()
-
 # end
